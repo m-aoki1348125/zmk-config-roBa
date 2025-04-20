@@ -82,7 +82,7 @@
 &kp LCTRL         &kp LEFT_WIN  &kp LEFT_ALT  &kp BACKSPACE  &lt 3 LANG2  &lt_to_layer_0 1 SPACE      &kp ENTER         &lt 2 LANG1                             &kp DEL
             >;
 
-            sensor-bindings = <&scroll_up_down>;
+            sensor-bindings = <&inc_dec_kp UP_ARROW DOWN_ARROW>;
         };
 
         FUNCTION {
