@@ -101,7 +101,7 @@
 &kp MINUS             &kp N7        &kp N8        &kp N9        &kp PLUS                                         &kp AMPERSAND    &kp ASTERISK  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp PIPE
 &kp SLASH             &kp NUMBER_4  &kp NUMBER_5  &kp NUMBER_6  &kp ASTERISK  &kp LC(LA(BACKSPACE))      &trans  &kp DOLLAR       &kp PERCENT   &kp LCTRL             &kp COLON              &kp TILDE
 &mt LEFT_SHIFT EQUAL  &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp ENTER     &kp COLON                  &trans  &kp EXCLAMATION  &kp AT_SIGN   &kp HASH              &kp SEMICOLON          &kp BACKSLASH
-&trans                &kp N0        &kp PERIOD    &trans        &trans        &trans                     &trans  &trans                                                                      &trans
+&trans                &kp N0        &kp PERIOD    &trans        &trans        &trans                     &trans  &trans                                                                      &lt 6 SPACE
             >;
 
             sensor-bindings = <&inc_dec_kp DOWN_ARROW UP_ARROW>;
@@ -149,6 +149,15 @@
             >;
 
             sensor-bindings = <&inc_dec_kp DOWN_ARROW UP_ARROW>;
+        };
+
+        layer_7 {
+            bindings = <
+&trans  &trans  &trans  &trans  &trans                      &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                          &trans
+            >;
         };
     };
 };
