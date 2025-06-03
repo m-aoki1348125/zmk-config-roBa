@@ -18,7 +18,102 @@
     trackball_listener {
         compatible = "zmk,input-listener";
         device = <&trackball>;
-
+        
+        // 動的感度調整の設定
+        scale-multiplier = <1>;
+        scale-divisor = <2>;
+        
+        // レイヤー別設定
+        input-processors = <&layer_processor>;
+    };
+    
+    // 感度調整用のビヘイビア
+    behaviors {
+        // マウス移動用の動的調整
+        adaptive_mouse: adaptive_mouse {
+            compatible = "zmk,behavior-input-processor";
+            #binding-cells = <0>;
+            input-processors = <&mouse_scaling>;
+        };
+        
+        // スクロール用の動的調整
+        adaptive_scroll: adaptive_scroll {
+            compatible = "zmk,behavior-input-processor";
+            #binding-cells = <0>;
+            input-processors = <&scroll_scaling>;
+        };
+        
+        // レイヤー別プロセッサー
+        layer_processor: layer_processor {
+            compatible = "zmk,input-processor-layer-switch";
+            #input-processor-cells = <1>;
+            
+            // レイヤー4（MOUSE）ではマウス調整
+            bindings = <4 &mouse_scaling>;
+            // レイヤー5（SCROLL）ではスクロール調整
+            bindings = <5 &scroll_scaling>;
+            // その他のレイヤーではデフォルト
+            default-processor = <&mouse_scaling>;
+        };
+        
+        // マウス移動用のスケーリング
+        mouse_scaling: mouse_scaling {
+            compatible = "zmk,input-processor-scaler";
+            #input-processor-cells = <2>;
+            
+            // 基本倍率
+            scale-multiplier = <1>;
+            scale-divisor = <2>;
+            
+            // 加速度設定
+            acceleration {
+                // 低速域設定（精密操作）
+                slow-threshold = <10>;
+                slow-multiplier = <1>;
+                slow-divisor = <3>;
+                
+                // 中速域設定（通常操作）
+                medium-threshold = <50>;
+                medium-multiplier = <2>;
+                medium-divisor = <3>;
+                
+                // 高速域設定（高速移動）
+                fast-multiplier = <3>;
+                fast-divisor = <2>;
+            };
+        };
+        
+        // スクロール用のスケーリング
+        scroll_scaling: scroll_scaling {
+            compatible = "zmk,input-processor-scaler";
+            #input-processor-cells = <2>;
+            
+            // スクロール基本倍率（マウスより少し敏感に）
+            scale-multiplier = <2>;
+            scale-divisor = <3>;
+            
+            // スクロール専用の加速度設定
+            acceleration {
+                // 低速域（微細スクロール）
+                slow-threshold = <8>;
+                slow-multiplier = <1>;
+                slow-divisor = <4>;
+                
+                // 中速域（通常スクロール）
+                medium-threshold = <30>;
+                medium-multiplier = <3>;
+                medium-divisor = <4>;
+                
+                // 高速域（高速スクロール）
+                fast-multiplier = <2>;
+                fast-divisor = <1>;
+            };
+            
+            // スクロール専用設定
+            scroll-mode = "adaptive";
+            scroll-momentum = <150>;
+            scroll-deceleration = <80>;
+        };
     };
 };
 
@@ -59,7 +154,19 @@
         irq-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
         automouse-layer = <4>;
         scroll-layers = <5>;
+        
+        // 基本感度設定
+        cpi = <1000>;
+        motion-multiplier = <1>;
+        motion-divisor = <2>;
+        
+        // 全体的な加速度設定
+        acceleration-threshold = <15>;
+        acceleration-ceiling = <300>;
+        
+        // スクロール専用設定
+        scroll-sensitivity = <120>;
+        scroll-acceleration = <180>;
+        scroll-momentum-enable = <1>;
     };
 };
-
-
