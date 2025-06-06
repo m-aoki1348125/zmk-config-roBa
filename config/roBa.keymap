@@ -57,16 +57,39 @@
             compatible = "zmk,behavior-hold-tap";
             label = "LAYER_TAP_TO_0";
             bindings = <&mo>, <&to_layer_0>;
-
             #binding-cells = <2>;
             tapping-term-ms = <200>;
         };
 
+        // デフォルト層用のスクロール（上下スクロール）
         scroll_up_down: behavior_sensor_rotate_mouse_wheel_up_down {
             compatible = "zmk,behavior-sensor-rotate";
             #sensor-binding-cells = <0>;
             bindings = <&msc SCRL_DOWN>, <&msc SCRL_UP>;
+            tap-ms = <20>;
+        };
 
+        // 音量調整用（ファンクション層用）
+        volume_up_down: behavior_sensor_rotate_volume {
+            compatible = "zmk,behavior-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            bindings = <&kp C_VOL_DN>, <&kp C_VOL_UP>;
+            tap-ms = <30>;
+        };
+
+        // 矢印キー用（アロー層用）
+        arrow_up_down: behavior_sensor_rotate_arrow {
+            compatible = "zmk,behavior-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            bindings = <&kp DOWN_ARROW>, <&kp UP_ARROW>;
+            tap-ms = <50>;
+        };
+
+        // 水平スクロール用（スクロール層用）
+        scroll_left_right: behavior_sensor_rotate_horizontal {
+            compatible = "zmk,behavior-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            bindings = <&msc SCRL_LEFT>, <&msc SCRL_RIGHT>;
             tap-ms = <20>;
         };
     };
@@ -77,7 +100,7 @@
         default_layer {
             bindings = <
 &kp Q             &kp W         &kp E         &kp R          &kp T                                                           &kp Y        &kp U  &kp I      &kp O    &kp P
-&mt RCTRL A       &kp S         &kp D         &kp F          &kp G        &kp LS(LC(LEFT_GUI))        &kp TAB                &kp H        &kp J  &kp K      &kp L    &mt RCTRL MINUS
+&mt RCTRL A       &kp S         &kp D         &kp F          &kp G        &kp K_MUTE                  &kp TAB                &kp H        &kp J  &kp K      &kp L    &mt RCTRL MINUS
 &mt LEFT_SHIFT Z  &kp X         &kp C         &kp V          &kp B        &kp ESCAPE                  &kp DEL                &kp N        &kp M  &kp COMMA  &kp DOT  &mt RIGHT_SHIFT SLASH
 &kp LCTRL         &kp LEFT_WIN  &kp LEFT_ALT  &kp BACKSPACE  &lt 3 LANG2  &lt_to_layer_0 1 SPACE      &mt RIGHT_SHIFT ENTER  &lt 2 LANG1                             &kp LEFT_GUI
             >;
@@ -93,7 +116,7 @@
 &trans  &kp N0        &kp N0        &trans        &trans  &trans      &trans  &trans                           &trans
             >;
 
-            sensor-bindings = <&scroll_up_down>;
+            sensor-bindings = <&volume_up_down>;
         };
 
         NUM {
@@ -115,7 +138,7 @@
 &trans          &trans                  &trans          &trans                   &trans   &trans      &trans  &trans                                                                       &trans
             >;
 
-            sensor-bindings = <&scroll_up_down>;
+            sensor-bindings = <&arrow_up_down>;
         };
 
         MOUSE {
@@ -137,7 +160,7 @@
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                          &trans
             >;
 
-            sensor-bindings = <&scroll_up_down>;
+            sensor-bindings = <&scroll_left_right>;
         };
 
         layer_6 {
@@ -158,6 +181,8 @@
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                          &trans
             >;
+
+            sensor-bindings = <&scroll_up_down>;
         };
     };
 };
