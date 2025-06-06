@@ -81,9 +81,17 @@
         arrow_up_down: behavior_sensor_rotate_arrow {
             compatible = "zmk,behavior-sensor-rotate";
             #sensor-binding-cells = <0>;
-            bindings = <&kp DOWN_ARROW>, <&kp UP_ARROW>;
+            bindings = <&kp LEFT_ARROW>, <&kp RIGHT_ARROW>;
             tap-ms = <50>;
         };
+
+        arrow_left_right: behavior_sensor_rotate_arrow {
+            compatible = "zmk,behavior-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            bindings = <&kp 8_ARROW>, <&kp UP_ARROW>;
+            tap-ms = <50>;
+        };
+
 
         // 水平スクロール用（スクロール層用）
         scroll_left_right: behavior_sensor_rotate_horizontal {
