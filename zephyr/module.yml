@@ -1,4 +1,7 @@
 name: roBa
 build:
+  cmake: config/custom
+  kconfig: config/custom/Kconfig
   settings:
     board_root: config
+    dts_root: config/custom

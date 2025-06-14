@@ -1,0 +1,11 @@
+# Copyright (c) 2024 roBa Project
+# SPDX-License-Identifier: MIT
+
+config ZMK_INPUT_PROCESSOR_VELOCITY_SCALER
+    bool "Velocity-based input processor"
+    depends on ZMK_INPUT
+    default y
+    help
+      Enable velocity-based input processor for dynamic mouse acceleration.
+      This processor calculates movement velocity and applies scaling based
+      on configurable acceleration curves.

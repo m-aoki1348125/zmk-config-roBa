@@ -1,0 +1,44 @@
+# Copyright (c) 2024 roBa Project
+# SPDX-License-Identifier: MIT
+
+description: ZMK velocity-based input processor for dynamic mouse acceleration
+
+compatible: "zmk,input-processor-velocity-scaler"
+
+include: ip_two_param.yaml
+
+properties:
+  type:
+    type: int
+    required: true
+    description: Input event type to process
+
+  codes:
+    type: array
+    required: true
+    description: Input event codes to process
+
+  min-scale-factor:
+    type: int
+    default: 50
+    description: Minimum scaling factor in percent (100 = 1.0x)
+
+  max-scale-factor:
+    type: int
+    default: 300
+    description: Maximum scaling factor in percent (100 = 1.0x)
+
+  velocity-threshold:
+    type: int
+    default: 500
+    description: Velocity threshold in pixels per second for full acceleration
+
+  acceleration-power:
+    type: int
+    default: 150
+    description: Acceleration curve power in percent (100 = linear, >100 = more aggressive)
+
+  track-remainders:
+    type: boolean
+    default: true
+    description: Track fractional remainders for smooth scaling

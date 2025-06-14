@@ -15,79 +15,52 @@
 };
 
 / {
-    // 可変感度用の入力プロセッサ定義（加速度カーブ効果）
+    // 速度ベース加速プロセッサー定義
     trackball_processors {
-        // 超精密モード - 0.3倍（微細作業用）
-        trackball_ultra_slow: trackball_ultra_slow {
-            compatible = "zmk,input-processor-scaler";
+        // メイン速度加速プロセッサー
+        trackball_velocity_accel: trackball_velocity_accel {
+            compatible = "zmk,input-processor-velocity-scaler";
             #input-processor-cells = <0>;
-            scaling-factor-numerator = <3>;
-            scaling-factor-denominator = <10>;
             type = <INPUT_EV_REL>;
             codes = <INPUT_REL_X INPUT_REL_Y>;
+            
+            // 加速パラメーター
+            min-scale-factor = <30>;        // 最小倍率: 0.3x (遅い動き)
+            max-scale-factor = <400>;       // 最大倍率: 4.0x (速い動き)
+            velocity-threshold = <800>;     // 閾値: 800 pixels/second
+            acceleration-power = <200>;     // 加速カーブ: 2.0 (指数的)
+            track-remainders;               // 残余追跡で滑らかな動作
         };
 
-        // 低速移動用（高精度）- 0.6倍
-        trackball_slow: trackball_slow {
-            compatible = "zmk,input-processor-scaler";
+        // 精密作業用 (低加速)
+        trackball_precision: trackball_precision {
+            compatible = "zmk,input-processor-velocity-scaler";
             #input-processor-cells = <0>;
-            scaling-factor-numerator = <3>;
-            scaling-factor-denominator = <5>;
             type = <INPUT_EV_REL>;
             codes = <INPUT_REL_X INPUT_REL_Y>;
+            
+            min-scale-factor = <40>;        // 最小倍率: 0.4x
+            max-scale-factor = <150>;       // 最大倍率: 1.5x
+            velocity-threshold = <300>;     // 低い閾値
+            acceleration-power = <130>;     // 緩やかな加速
+            track-remainders;
         };
 
-        // 中低速モード - 0.8倍
-        trackball_medium_slow: trackball_medium_slow {
-            compatible = "zmk,input-processor-scaler";
+        // ナビゲーション用 (高加速)
+        trackball_navigation: trackball_navigation {
+            compatible = "zmk,input-processor-velocity-scaler";
             #input-processor-cells = <0>;
-            scaling-factor-numerator = <4>;
-            scaling-factor-denominator = <5>;
             type = <INPUT_EV_REL>;
             codes = <INPUT_REL_X INPUT_REL_Y>;
+            
+            min-scale-factor = <50>;        // 最小倍率: 0.5x
+            max-scale-factor = <600>;       // 最大倍率: 6.0x
+            velocity-threshold = <1200>;    // 高い閾値
+            acceleration-power = <300>;     // 積極的な加速
+            track-remainders;
         };
 
-        // 標準移動用（通常）- 1.0倍  
-        trackball_normal: trackball_normal {
-            compatible = "zmk,input-processor-scaler";
-            #input-processor-cells = <0>;
-            scaling-factor-numerator = <1>;
-            scaling-factor-denominator = <1>;
-            type = <INPUT_EV_REL>;
-            codes = <INPUT_REL_X INPUT_REL_Y>;
-        };
-
-        // 中高速モード - 1.4倍
-        trackball_medium_fast: trackball_medium_fast {
-            compatible = "zmk,input-processor-scaler";
-            #input-processor-cells = <0>;
-            scaling-factor-numerator = <7>;
-            scaling-factor-denominator = <5>;
-            type = <INPUT_EV_REL>;
-            codes = <INPUT_REL_X INPUT_REL_Y>;
-        };
-
-        // 高速移動用（快速）- 2.0倍
-        trackball_fast: trackball_fast {
-            compatible = "zmk,input-processor-scaler";
-            #input-processor-cells = <0>;
-            scaling-factor-numerator = <2>;
-            scaling-factor-denominator = <1>;
-            type = <INPUT_EV_REL>;
-            codes = <INPUT_REL_X INPUT_REL_Y>;
-        };
-
-        // 超高速モード - 3.0倍（快速ナビゲーション）
-        trackball_ultra_fast: trackball_ultra_fast {
-            compatible = "zmk,input-processor-scaler";
-            #input-processor-cells = <0>;
-            scaling-factor-numerator = <3>;
-            scaling-factor-denominator = <1>;
-            type = <INPUT_EV_REL>;
-            codes = <INPUT_REL_X INPUT_REL_Y>;
-        };
-
-        // スクロール用 - 0.25倍（精密スクロール）
+        // スクロール用 (固定低倍率)
         trackball_scroll: trackball_scroll {
             compatible = "zmk,input-processor-scaler";
             #input-processor-cells = <0>;
@@ -101,48 +74,48 @@
     trackball_listener {
         compatible = "zmk,input-listener";
         device = <&trackball>;
-        input-processors = <&trackball_normal>;
+        input-processors = <&trackball_velocity_accel>;
 
-        // レイヤー1: FUNCTION - 高精度モード（低速）
+        // レイヤー1: FUNCTION - 精密作業用加速
         layer_1 {
             layers = <1>;
-            input-processors = <&trackball_slow>;
+            input-processors = <&trackball_precision>;
         };
 
-        // レイヤー2: NUM - 標準モード
+        // レイヤー2: NUM - 標準速度加速
         layer_2 {
             layers = <2>;
-            input-processors = <&trackball_normal>;
+            input-processors = <&trackball_velocity_accel>;
         };
 
-        // レイヤー3: ARROW - 高速モード
+        // レイヤー3: ARROW - 高速ナビゲーション加速
         layer_3 {
             layers = <3>;
-            input-processors = <&trackball_fast>;
+            input-processors = <&trackball_navigation>;
         };
 
-        // レイヤー4: MOUSE - 標準マウスモード
+        // レイヤー4: MOUSE - 標準速度加速
         layer_4 {
             layers = <4>;
-            input-processors = <&trackball_normal>;
+            input-processors = <&trackball_velocity_accel>;
         };
 
-        // レイヤー5: SCROLL - 精密スクロールモード
+        // レイヤー5: SCROLL - 固定低倍率（加速なし）
         layer_5 {
             layers = <5>;
             input-processors = <&trackball_scroll>;
         };
 
-        // レイヤー6: システム - 低速モード（設定時の誤操作防止）
+        // レイヤー6: システム - 精密作業用（誤操作防止）
         layer_6 {
             layers = <6>;
-            input-processors = <&trackball_slow>;
+            input-processors = <&trackball_precision>;
         };
 
-        // レイヤー7: 複合レイヤー - 高速モード
+        // レイヤー7: 複合レイヤー - 高速ナビゲーション
         layer_7 {
             layers = <7>;
-            input-processors = <&trackball_fast>;
+            input-processors = <&trackball_navigation>;
         };
     };
 };
