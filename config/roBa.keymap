@@ -61,11 +61,11 @@
             tapping-term-ms = <200>;
         };
 
-        // デフォルト層用のスクロール（上下スクロール）
+        // デフォルト層用のスクロール（上下スクロール） - 無効化
         scroll_up_down: behavior_sensor_rotate_mouse_wheel_up_down {
             compatible = "zmk,behavior-sensor-rotate";
             #sensor-binding-cells = <0>;
-            bindings = <&msc SCRL_UP>, <&msc SCRL_DOWN>;
+            bindings = <&kp UP_ARROW>, <&kp DOWN_ARROW>;
             tap-ms = <20>;
         };
 
@@ -93,11 +93,11 @@
         };
 
 
-        // 水平スクロール用（スクロール層用）
+        // 水平スクロール用（スクロール層用） - 無効化
         scroll_left_right: behavior_sensor_rotate_horizontal {
             compatible = "zmk,behavior-sensor-rotate";
             #sensor-binding-cells = <0>;
-            bindings = <&msc SCRL_LEFT>, <&msc SCRL_RIGHT>;
+            bindings = <&kp LEFT_ARROW>, <&kp RIGHT_ARROW>;
             tap-ms = <20>;
         };
     };
@@ -151,10 +151,10 @@
 
         MOUSE {
             bindings = <
-&trans  &trans  &trans  &trans  &trans                      &trans  &kp RA(LEFT_ARROW)  &mkp MCLK  &kp RA(RIGHT_ARROW)  &trans
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &mkp LCLK           &mkp RCLK  &mo 5                &trans
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans              &trans     &trans               &trans
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                                                      &trans
+&trans  &trans  &trans  &trans  &trans                      &trans  &kp RA(LEFT_ARROW)  &trans  &kp RA(RIGHT_ARROW)  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans              &trans  &mo 5                &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans              &trans  &trans               &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                                                   &trans
             >;
 
             sensor-bindings = <&scroll_up_down>;
