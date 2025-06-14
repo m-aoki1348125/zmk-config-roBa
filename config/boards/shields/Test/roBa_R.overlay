@@ -15,9 +15,87 @@
 };
 
 / {
+    // 可変感度用の入力プロセッサ定義
+    trackball_processors {
+        // 低速移動用（高精度）- 0.5倍
+        trackball_slow: trackball_slow {
+            compatible = "zmk,input-processor-scaler";
+            #input-processor-cells = <0>;
+            scaling-factor-numerator = <1>;
+            scaling-factor-denominator = <2>;
+        };
+
+        // 中速移動用（標準）- 1.0倍  
+        trackball_normal: trackball_normal {
+            compatible = "zmk,input-processor-scaler";
+            #input-processor-cells = <0>;
+            scaling-factor-numerator = <1>;
+            scaling-factor-denominator = <1>;
+        };
+
+        // 高速移動用（快速）- 2.0倍
+        trackball_fast: trackball_fast {
+            compatible = "zmk,input-processor-scaler";
+            #input-processor-cells = <0>;
+            scaling-factor-numerator = <2>;
+            scaling-factor-denominator = <1>;
+        };
+
+        // スクロール用 - 0.3倍（精密スクロール）
+        trackball_scroll: trackball_scroll {
+            compatible = "zmk,input-processor-scaler";
+            #input-processor-cells = <0>;
+            scaling-factor-numerator = <3>;
+            scaling-factor-denominator = <10>;
+        };
+    };
+
     trackball_listener {
         compatible = "zmk,input-listener";
         device = <&trackball>;
+        input-processors = <&trackball_normal>;
+
+        // レイヤー1: FUNCTION - 高精度モード（低速）
+        layer_1 {
+            layers = <1>;
+            input-processors = <&trackball_slow>;
+        };
+
+        // レイヤー2: NUM - 標準モード
+        layer_2 {
+            layers = <2>;
+            input-processors = <&trackball_normal>;
+        };
+
+        // レイヤー3: ARROW - 高速モード
+        layer_3 {
+            layers = <3>;
+            input-processors = <&trackball_fast>;
+        };
+
+        // レイヤー4: MOUSE - 標準マウスモード
+        layer_4 {
+            layers = <4>;
+            input-processors = <&trackball_normal>;
+        };
+
+        // レイヤー5: SCROLL - 精密スクロールモード
+        layer_5 {
+            layers = <5>;
+            input-processors = <&trackball_scroll>;
+        };
+
+        // レイヤー6: システム - 低速モード（設定時の誤操作防止）
+        layer_6 {
+            layers = <6>;
+            input-processors = <&trackball_slow>;
+        };
+
+        // レイヤー7: 複合レイヤー - 高速モード
+        layer_7 {
+            layers = <7>;
+            input-processors = <&trackball_fast>;
+        };
     };
 };
 

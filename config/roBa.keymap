@@ -52,6 +52,15 @@
         };
     };
 
+    // トラックボール感度切り替え用のレイヤー別設定
+    conditional_layers {
+        compatible = "zmk,conditional-layers";
+        tri_layer {
+            if-layers = <1 2>;
+            then-layer = <7>;
+        };
+    };
+
     behaviors {
         lt_to_layer_0: lt_to_layer_0 {
             compatible = "zmk,behavior-hold-tap";
@@ -172,6 +181,7 @@
         };
 
         layer_6 {
+            // システム設定層 (低速トラックボール感度)
             bindings = <
 &trans  &trans        &trans        &trans        &trans                           &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4
 &trans  &trans        &trans        &trans        &trans  &trans      &trans       &trans        &trans        &trans        &trans        &trans
@@ -183,6 +193,7 @@
         };
 
         layer_7 {
+            // 複合レイヤー (FUNCTION + NUM同時押し時 - 高速トラックボール感度)
             bindings = <
 &trans  &trans  &trans  &trans  &trans                      &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
