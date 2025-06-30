@@ -74,10 +74,10 @@
 
         FUNCTION {
             bindings = <
-&trans  &kp NON_US_BACKSLASH  &kp LEFT_BRACE        &kp RIGHT_BRACE        &kp GRAVE                              &kp F7  &kp F8  &kp F9  &kp F10  &trans
-&trans  &kp PIPE              &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp DOUBLE_QUOTES  &trans      &trans  &kp F4  &kp F5  &kp F6  &kp F11  &trans
-&trans  &kp TILDE             &kp LEFT_BRACKET      &kp RIGHT_BRACKET      &kp SQT            &trans      &trans  &kp F1  &kp F2  &kp F3  &kp F12  &kp NON_US_BACKSLASH
-&trans  &trans                &trans                &trans                 &trans             &trans      &trans  &trans                           &mo 6
+&kp ESCAPE  &kp NON_US_BACKSLASH  &kp LEFT_BRACE        &kp RIGHT_BRACE        &kp GRAVE                              &kp F7  &kp F8  &kp F9  &kp F10  &trans
+&trans      &kp PIPE              &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp DOUBLE_QUOTES  &trans      &trans  &kp F4  &kp F5  &kp F6  &kp F11  &trans
+&trans      &kp TILDE             &kp LEFT_BRACKET      &kp RIGHT_BRACKET      &kp SQT            &trans      &trans  &kp F1  &kp F2  &kp F3  &kp F12  &kp NON_US_BACKSLASH
+&trans      &trans                &trans                &trans                 &trans             &trans      &trans  &trans                           &mo 6
             >;
         };
 
@@ -149,6 +149,15 @@
         };
 
         layer_9 {
+            bindings = <
+&trans  &trans  &trans  &trans  &trans                      &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                          &trans
+            >;
+        };
+
+        layer_10 {
             bindings = <
 &trans  &trans  &trans  &trans  &trans                      &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
