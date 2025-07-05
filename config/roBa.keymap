@@ -2,6 +2,7 @@
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/pointing.h>
+#include <mouse-gesture.dtsi>
 
 &mt {
     flavor = "balanced";
@@ -103,10 +104,10 @@
 
         MOUSE {
             bindings = <
-&trans  &kp LA(LEFT_ARROW)  &mkp MB3  &kp LA(RIGHT_ARROW)  &trans                      &trans  &kp LA(LEFT_ARROW)  &mkp MB3  &kp LA(RIGHT_ARROW)  &trans
-&trans  &mo 5               &mkp MB2  &mkp MB1             &trans  &trans      &trans  &trans  &mkp MB1            &mkp MB2  &mo 5                &trans
-&trans  &trans              &trans    &trans               &trans  &trans      &trans  &trans  &trans              &trans    &trans               &trans
-&trans  &trans              &trans    &trans               &trans  &trans      &trans  &trans                                                     &trans
+&trans  &kp LA(LEFT_ARROW)  &mkp MB3  &kp LA(RIGHT_ARROW)  &trans                      &trans  &kp LA(LEFT_ARROW)     &mkp MB3  &kp LA(RIGHT_ARROW)  &trans
+&trans  &mo 5               &mkp MB2  &mkp MB1             &trans  &trans      &trans  &trans  &mkp MB1               &mkp MB2  &mo 5                &trans
+&trans  &trans              &trans    &trans               &trans  &trans      &trans  &trans  &mouse_gesture_toggle  &trans    &trans               &trans
+&trans  &trans              &trans    &trans               &trans  &trans      &trans  &trans                                                        &trans
             >;
         };
 
@@ -165,5 +166,73 @@
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                          &trans
             >;
         };
+    };
+};
+
+// Configure mouse gesture patterns
+&zip_mouse_gesture {
+    stroke-size = <300>;
+    enable-8way;
+    movement-threshold = <10>;
+
+    // Browser navigation gestures
+    history_back {
+        pattern = <GESTURE_LEFT>;
+        bindings = <&kp LA(LEFT)>;
+    };
+
+    history_forward {
+        pattern = <GESTURE_RIGHT>;
+        bindings = <&kp LA(RIGHT)>;
+    };
+
+    // Tab management
+    close_tab {
+        pattern = <GESTURE_DOWN GESTURE_RIGHT>;
+        bindings = <&kp LC(W)>;
+    };
+
+    new_tab {
+        pattern = <GESTURE_DOWN GESTURE_LEFT>;
+        bindings = <&kp LC(T)>;
+    };
+
+    // Window switching
+    next_window {
+        pattern = <GESTURE_UP GESTURE_RIGHT>;
+        bindings = <&kp LC(TAB)>;
+    };
+
+    prev_window {
+        pattern = <GESTURE_UP GESTURE_LEFT>;
+        bindings = <&kp LC(LS(TAB))>;
+    };
+
+    // Volume control
+    volume_up {
+        pattern = <GESTURE_UP>;
+        bindings = <&kp C_VOLUME_UP>;
+    };
+
+    volume_down {
+        pattern = <GESTURE_DOWN>;
+        bindings = <&kp C_VOLUME_DOWN>;
+    };
+
+    // Desktop switching (macOS)
+    desktop_left {
+        pattern = <GESTURE_DOWN_LEFT GESTURE_UP_LEFT>;
+        bindings = <&kp LC(LEFT)>;
+    };
+
+    desktop_right {
+        pattern = <GESTURE_DOWN_RIGHT GESTURE_UP_RIGHT>;
+        bindings = <&kp LC(RIGHT)>;
+    };
+
+    // Application launcher
+    app_launcher {
+        pattern = <GESTURE_UP GESTURE_DOWN>;
+        bindings = <&kp LG(SPACE)>;
     };
 };

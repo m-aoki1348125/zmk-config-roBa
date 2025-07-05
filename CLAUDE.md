@@ -35,3 +35,7 @@ Manual builds would require ZMK development environment setup with west tool.
 - Combos are defined for common key combinations (tab, shift+tab, quotes, etc.)
 - Sensor behaviors are layer-specific: scroll on default, volume on function, arrows on arrow layer
 - Bluetooth management is handled in layer 6 with device selection and clearing functions
+
+## Local Development Environment
+
+When setting up test and build environments locally, always use virtual environments such as uv or venv for isolation and dependency management.
