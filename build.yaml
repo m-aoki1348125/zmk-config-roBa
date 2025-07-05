@@ -20,10 +20,10 @@
 include:
   - board: seeeduino_xiao_ble
     shield: roBa_L
-    artifact-name: roBa_L_basic
+    artifact-name: roBa_L
   - board: seeeduino_xiao_ble
-    shield: roBa_R_basic
-    artifact-name: roBa_R_basic
+    shield: roBa_R
+    artifact-name: roBa_R
   - board: seeeduino_xiao_ble
     shield: settings_reset
     artifact-name: settings_reset
