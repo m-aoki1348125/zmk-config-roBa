@@ -70,7 +70,7 @@
 &kp LCTRL         &kp LEFT_WIN  &kp LEFT_ALT  &kp BACKSPACE  &lt_to_layer_0 3 LANG2  &lt_to_layer_0 4 SPACE      &lt_to_layer_0 1 ENTER  &lt_to_layer_0 2 LANG1                             &kp DEL
             >;
 
-            sensor-bindings = <&inc_dec_kp DOWN_ARROW UP_ARROW>;
+            // sensor-bindings = <&inc_dec_kp DOWN_ARROW UP_ARROW>; // Disabled for stable build
         };
 
         FUNCTION {
@@ -99,7 +99,7 @@
 &trans          &trans                  &trans          &trans                   &trans   &trans      &trans  &trans                                                       &trans
             >;
 
-            sensor-bindings = <&inc_dec_kp LC(PAGE_DOWN) LC(PAGE_UP)>;
+            // sensor-bindings = <&inc_dec_kp LC(PAGE_DOWN) LC(PAGE_UP)>; // Disabled for stable build
         };
 
         MOUSE {
@@ -119,7 +119,7 @@
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                          &trans
             >;
 
-            sensor-bindings = <&inc_dec_kp PAGE_DOWN PAGE_UP>;
+            // sensor-bindings = <&inc_dec_kp PAGE_DOWN PAGE_UP>; // Disabled for stable build
         };
 
         BLE {
