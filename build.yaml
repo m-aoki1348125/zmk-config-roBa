@@ -20,17 +20,10 @@
 include:
   - board: seeeduino_xiao_ble
     shield: roBa_L
-    artifact-name: roBa_L_mouse_gesture
-    cmake-args: -DCONFIG_ZMK_MOUSE_GESTURE=y
+    artifact-name: roBa_L_basic
   - board: seeeduino_xiao_ble
-    shield: roBa_R
-    artifact-name: roBa_R_mouse_gesture
-    cmake-args: -DCONFIG_ZMK_MOUSE_GESTURE=y -DCONFIG_ZMK_POINTING=y
-  - board: seeeduino_xiao_ble
-    shield: roBa_R
-    snippet: studio-rpc-usb-uart
-    artifact-name: roBa_R_studio
-    cmake-args: -DCONFIG_ZMK_MOUSE_GESTURE=y -DCONFIG_ZMK_POINTING=y
+    shield: roBa_R_basic
+    artifact-name: roBa_R_basic
   - board: seeeduino_xiao_ble
     shield: settings_reset
     artifact-name: settings_reset
