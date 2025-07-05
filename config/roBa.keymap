@@ -2,7 +2,7 @@
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/pointing.h>
-// #include <mouse-gesture.dtsi>  // Temporarily disabled to test build
+#include <mouse-gesture.dtsi>
 
 &mt {
     flavor = "balanced";
@@ -169,8 +169,7 @@
     };
 };
 
-/*
-// Configure mouse gesture patterns - Temporarily disabled to test build
+// Configure mouse gesture patterns - Basic implementation
 &zip_mouse_gesture {
     stroke-size = <300>;
     enable-8way;
@@ -187,28 +186,6 @@
         bindings = <&kp LA(RIGHT)>;
     };
 
-    // Tab management
-    close_tab {
-        pattern = <GESTURE_DOWN GESTURE_RIGHT>;
-        bindings = <&kp LC(W)>;
-    };
-
-    new_tab {
-        pattern = <GESTURE_DOWN GESTURE_LEFT>;
-        bindings = <&kp LC(T)>;
-    };
-
-    // Window switching
-    next_window {
-        pattern = <GESTURE_UP GESTURE_RIGHT>;
-        bindings = <&kp LC(TAB)>;
-    };
-
-    prev_window {
-        pattern = <GESTURE_UP GESTURE_LEFT>;
-        bindings = <&kp LC(LS(TAB))>;
-    };
-
     // Volume control
     volume_up {
         pattern = <GESTURE_UP>;
@@ -219,22 +196,4 @@
         pattern = <GESTURE_DOWN>;
         bindings = <&kp C_VOLUME_DOWN>;
     };
-
-    // Desktop switching (macOS)
-    desktop_left {
-        pattern = <GESTURE_DOWN_LEFT GESTURE_UP_LEFT>;
-        bindings = <&kp LC(LEFT)>;
-    };
-
-    desktop_right {
-        pattern = <GESTURE_DOWN_RIGHT GESTURE_UP_RIGHT>;
-        bindings = <&kp LC(RIGHT)>;
-    };
-
-    // Application launcher
-    app_launcher {
-        pattern = <GESTURE_UP GESTURE_DOWN>;
-        bindings = <&kp LG(SPACE)>;
-    };
 };
-*/
