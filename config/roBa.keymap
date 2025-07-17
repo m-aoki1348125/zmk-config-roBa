@@ -62,58 +62,6 @@
         };
     };
 
-    mouse_gestures {
-        compatible = "zmk,input-processor-chain";
-
-        &zip_mouse_gesture {
-            stroke-size = <200>;
-            enable-eager-mode;
-
-            // Browser navigation
-            history_back {
-                pattern = <GESTURE_RIGHT>;
-                bindings = <&kp LA(LEFT)>;
-            };
-
-            history_forward {
-                pattern = <GESTURE_LEFT>;
-                bindings = <&kp LA(RIGHT)>;
-            };
-
-            // Virtual desktop navigation
-            desktop_left {
-                pattern = <GESTURE_UP>;
-                bindings = <&kp LC(LG(LEFT))>;
-            };
-
-            desktop_right {
-                pattern = <GESTURE_DOWN>;
-                bindings = <&kp LC(LG(RIGHT))>;
-            };
-
-            // Tab navigation
-            tab_left {
-                pattern = <GESTURE_LEFT GESTURE_UP>;
-                bindings = <&kp LC(LS(TAB))>;
-            };
-
-            tab_right {
-                pattern = <GESTURE_RIGHT GESTURE_UP>;
-                bindings = <&kp LC(TAB)>;
-            };
-
-            // Window management
-            close_tab {
-                pattern = <GESTURE_DOWN GESTURE_UP>;
-                bindings = <&kp LC(W)>;
-            };
-
-            new_tab {
-                pattern = <GESTURE_UP GESTURE_DOWN>;
-                bindings = <&kp LC(T)>;
-            };
-        };
-    };
 
     keymap {
         compatible = "zmk,keymap";
@@ -189,72 +137,52 @@
     };
 };
 
-/*
-// Configure mouse gesture patterns - Temporarily disabled for stable build
+// Configure mouse gesture patterns
 &zip_mouse_gesture {
-    stroke-size = <300>;
-    enable-8way;
-    movement-threshold = <10>;
+    stroke-size = <200>;
+    enable-eager-mode;
 
     // Browser navigation gestures
     history_back {
-        pattern = <GESTURE_LEFT>;
+        pattern = <GESTURE_RIGHT>;
         bindings = <&kp LA(LEFT)>;
     };
 
     history_forward {
-        pattern = <GESTURE_RIGHT>;
+        pattern = <GESTURE_LEFT>;
         bindings = <&kp LA(RIGHT)>;
     };
 
-    // Tab management
+    // Virtual desktop navigation
+    desktop_left {
+        pattern = <GESTURE_UP>;
+        bindings = <&kp LC(LG(LEFT))>;
+    };
+
+    desktop_right {
+        pattern = <GESTURE_DOWN>;
+        bindings = <&kp LC(LG(RIGHT))>;
+    };
+
+    // Tab navigation
+    tab_left {
+        pattern = <GESTURE_LEFT GESTURE_UP>;
+        bindings = <&kp LC(LS(TAB))>;
+    };
+
+    tab_right {
+        pattern = <GESTURE_RIGHT GESTURE_UP>;
+        bindings = <&kp LC(TAB)>;
+    };
+
+    // Window management
     close_tab {
-        pattern = <GESTURE_DOWN GESTURE_RIGHT>;
+        pattern = <GESTURE_DOWN GESTURE_UP>;
         bindings = <&kp LC(W)>;
     };
 
     new_tab {
-        pattern = <GESTURE_DOWN GESTURE_LEFT>;
+        pattern = <GESTURE_UP GESTURE_DOWN>;
         bindings = <&kp LC(T)>;
     };
-
-    // Window switching
-    next_window {
-        pattern = <GESTURE_UP GESTURE_RIGHT>;
-        bindings = <&kp LC(TAB)>;
-    };
-
-    prev_window {
-        pattern = <GESTURE_UP GESTURE_LEFT>;
-        bindings = <&kp LC(LS(TAB))>;
-    };
-
-    // Volume control
-    volume_up {
-        pattern = <GESTURE_UP>;
-        bindings = <&kp C_VOLUME_UP>;
-    };
-
-    volume_down {
-        pattern = <GESTURE_DOWN>;
-        bindings = <&kp C_VOLUME_DOWN>;
-    };
-
-    // Desktop switching (macOS)
-    desktop_left {
-        pattern = <GESTURE_DOWN_LEFT GESTURE_UP_LEFT>;
-        bindings = <&kp LC(LEFT)>;
-    };
-
-    desktop_right {
-        pattern = <GESTURE_DOWN_RIGHT GESTURE_UP_RIGHT>;
-        bindings = <&kp LC(RIGHT)>;
-    };
-
-    // Application launcher
-    app_launcher {
-        pattern = <GESTURE_UP GESTURE_DOWN>;
-        bindings = <&kp LG(SPACE)>;
-    };
 };
-*/
