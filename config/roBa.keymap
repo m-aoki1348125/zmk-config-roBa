@@ -142,47 +142,24 @@
     stroke-size = <200>;
     enable-eager-mode;
 
-    // Browser navigation gestures
-    history_back {
+    // Window movement gestures
+    window_right {
         pattern = <GESTURE_RIGHT>;
-        bindings = <&kp LA(LEFT)>;
+        bindings = <&kp LG(RIGHT)>;
     };
 
-    history_forward {
+    window_left {
         pattern = <GESTURE_LEFT>;
-        bindings = <&kp LA(RIGHT)>;
+        bindings = <&kp LG(LEFT)>;
     };
 
-    // Virtual desktop navigation
-    desktop_left {
+    window_up {
         pattern = <GESTURE_UP>;
-        bindings = <&kp LC(LG(LEFT))>;
+        bindings = <&kp LG(UP)>;
     };
 
-    desktop_right {
+    window_down {
         pattern = <GESTURE_DOWN>;
-        bindings = <&kp LC(LG(RIGHT))>;
-    };
-
-    // Tab navigation
-    tab_left {
-        pattern = <GESTURE_LEFT GESTURE_UP>;
-        bindings = <&kp LC(LS(TAB))>;
-    };
-
-    tab_right {
-        pattern = <GESTURE_RIGHT GESTURE_UP>;
-        bindings = <&kp LC(TAB)>;
-    };
-
-    // Window management
-    close_tab {
-        pattern = <GESTURE_DOWN GESTURE_UP>;
-        bindings = <&kp LC(W)>;
-    };
-
-    new_tab {
-        pattern = <GESTURE_UP GESTURE_DOWN>;
-        bindings = <&kp LC(T)>;
+        bindings = <&kp LG(DOWN)>;
     };
 };
