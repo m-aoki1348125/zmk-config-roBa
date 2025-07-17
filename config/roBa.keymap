@@ -67,7 +67,8 @@
         layer = <4>; // MOUSE layer index
         timeless-keys = <&mkp LCLK &mkp RCLK &mkp MCLK &msc SCRL_UP &msc SCRL_DOWN &msc SCRL_LEFT &msc SCRL_RIGHT>;
         no-deactivate-keys = <&mkp LCLK &mkp RCLK &mkp MCLK &mo 5 &msc SCRL_UP &msc SCRL_DOWN &msc SCRL_LEFT &msc SCRL_RIGHT>;
-        timeout-ms = <3000>; // Auto-exit after 3 seconds of inactivity
+        timeout-ms = <2000>; // Auto-exit after 2 seconds of inactivity
+        require-prior-idle-ms = <100>; // Require 100ms idle before activation
     };
 
     keymap {
