@@ -108,10 +108,10 @@
 
         MOUSE {
             bindings = <
-&trans  &kp LA(LEFT_ARROW)  &mkp MB3  &kp LA(RIGHT_ARROW)  &trans                           &trans  &kp LA(LEFT_ARROW)  &mkp MB3               &kp LA(RIGHT_ARROW)  &trans
-&trans  &mo 5               &mkp MB2  &mkp MB1             &trans  &trans           &trans  &trans  &mkp MB1            &mkp MB2               &mo 5                &trans
-&trans  &trans              &trans    &trans               &trans  &trans           &trans  &trans  &trans              &mouse_gesture_toggle  &trans               &trans
-&trans  &trans              &trans    &trans               &trans  &mouse_gesture   &trans  &trans                                                                  &trans
+&trans  &kp LA(LEFT_ARROW)  &mkp MB3  &kp LA(RIGHT_ARROW)  &trans                      &trans  &kp LA(LEFT_ARROW)  &mkp MB3  &kp LA(RIGHT_ARROW)  &trans
+&trans  &mo 5               &mkp MB2  &mkp MB1             &trans  &trans      &trans  &trans  &mkp MB1            &mkp MB2  &mo 5                &trans
+&trans  &trans              &trans    &trans               &trans  &trans      &trans  &trans  &trans              &trans    &trans               &trans
+&trans  &trans              &trans    &trans               &trans  &trans      &trans  &trans                                                     &trans
             >;
         };
 
