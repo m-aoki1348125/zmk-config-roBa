@@ -41,14 +41,8 @@
 };
 
 / {
-    // PMW3610 trackball input listener for auto mouse layer (R side only)
-    trackball_listener: trackball_listener {
-        compatible = "zmk,input-listener";
-        device = <&trackball_device>;
-        status = "okay";
-        // Input processors for coordinate transformation
-        input-processors = <&zip_xy_transform (INPUT_TRANSFORM_Y_INVERT)>;
-    };
+    // PMW3610 trackball auto mouse layer handled by driver built-in functionality
+    // No manual input listener needed - automouse-layer property in device handles this
 };
 
 
