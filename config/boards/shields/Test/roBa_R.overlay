@@ -23,7 +23,7 @@
     pinctrl-names = "default", "sleep";
     cs-gpios = <&gpio0 9 GPIO_ACTIVE_LOW>;
 
-    trackball: trackball@0 {
+    trackball_device: trackball@0 {
         status = "okay";
         compatible = "pixart,pmw3610";
         reg = <0>;
@@ -33,6 +33,15 @@
         // Auto mouse layer configuration (supported properties only)
         automouse-layer = <4>;          // Layer 4 is MOUSE layer
         scroll-layers = <5>;            // Layer 5 is SCROLL layer
+    };
+};
+
+/ {
+    // PMW3610 trackball input listener for auto mouse layer (R side only)
+    trackball_listener: trackball_listener {
+        compatible = "zmk,input-listener";
+        device = <&trackball_device>;
+        status = "okay";
     };
 };
 

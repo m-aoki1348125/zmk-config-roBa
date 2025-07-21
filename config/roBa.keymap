@@ -60,12 +60,6 @@
         };
     };
 
-    // PMW3610 trackball input listener for auto mouse layer
-    trackball_listener: trackball_listener {
-        compatible = "zmk,input-listener";
-        device = <&trackball>;
-        status = "okay";
-    };
 
     keymap {
         compatible = "zmk,keymap";
