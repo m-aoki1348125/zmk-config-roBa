@@ -17,7 +17,7 @@
             ;
 };
 
-// PMW3610 trackball configuration for auto mouse layer
+// Use existing SPI pinctrl from roBa.dtsi
 &spi0 {
     status = "okay";
     compatible = "nordic,nrf-spim";
@@ -36,21 +36,20 @@
 };
 
 / {
-    // PAW3222 trackball input listener for auto mouse layer (working pattern)
+    // Simplified trackball listener for basic cursor movement
     trackball_listener: trackball_listener {
         compatible = "zmk,input-listener";
         device = <&trackball>;
         status = "okay";
-        input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>;
     };
 };
 
-// Auto mouse layer configuration (R side only)
+// EXACT auto mouse layer configuration from split-wball-44
 &trackball {
-    automouse-layer = <4>;        // Layer 4 is MOUSE layer
-    scroll-layers = <5>;          // Layer 5 is SCROLL layer  
-    movement-timeout-ms = <600>;  // 600ms timeout
-    movement-threshold = <0>;     // Any movement triggers
+    automouse-layer = <4>;       // Layer 4 for auto mouse
+    scroll-layers = <5>;         // Layer 5 for scroll mode  
+    movement-timeout-ms = <600>; // 600ms timeout before returning to base layer
+    movement-threshold = <0>;    // Any movement triggers auto mouse
 };
 
 
