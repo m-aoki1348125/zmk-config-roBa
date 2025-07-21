@@ -45,4 +45,12 @@
     };
 };
 
+// Auto mouse layer configuration (R side only)
+&trackball {
+    automouse-layer = <4>;        // Layer 4 is MOUSE layer
+    scroll-layers = <5>;          // Layer 5 is SCROLL layer  
+    movement-timeout-ms = <600>;  // 600ms timeout
+    movement-threshold = <0>;     // Any movement triggers
+};
+
 
