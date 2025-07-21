@@ -26,23 +26,23 @@
     pinctrl-names = "default", "sleep";
     cs-gpios = <&gpio0 9 GPIO_ACTIVE_LOW>;
 
-    trackball_device: trackball@0 {
+    trackball: trackball@0 {
         status = "okay";
-        compatible = "pixart,pmw3610";
+        compatible = "pixart,paw3222";
         reg = <0>;
         spi-max-frequency = <2000000>;
         irq-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-        
-        // Auto mouse layer configuration (kumamuk-git driver supports these)
-        automouse-layer = <4>;          // Layer 4 is MOUSE layer
-        scroll-layers = <5>;            // Layer 5 is SCROLL layer
-        
     };
 };
 
 / {
-    // PMW3610 trackball auto mouse layer handled by driver built-in functionality
-    // No manual input listener needed - automouse-layer property in device handles this
+    // PAW3222 trackball input listener for auto mouse layer (working pattern)
+    trackball_listener: trackball_listener {
+        compatible = "zmk,input-listener";
+        device = <&trackball>;
+        status = "okay";
+        input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>;
+    };
 };
 
 
