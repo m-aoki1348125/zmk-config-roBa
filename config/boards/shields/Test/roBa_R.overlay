@@ -33,15 +33,7 @@
         spi-max-frequency = <2000000>;
         irq-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
         
-        // Required input event properties for cursor movement
-        evt-type = <INPUT_EV_REL>;
-        x-input-code = <INPUT_REL_X>;
-        y-input-code = <INPUT_REL_Y>;
-        
-        // CPI resolution setting
-        cpi = <400>;
-        
-        // Auto mouse layer configuration
+        // Auto mouse layer configuration (kumamuk-git driver supports these)
         automouse-layer = <4>;          // Layer 4 is MOUSE layer
         scroll-layers = <5>;            // Layer 5 is SCROLL layer
         
