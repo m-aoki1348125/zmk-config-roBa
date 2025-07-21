@@ -11,12 +11,15 @@
 };
 
 // CRITICAL: Auto mouse layer configuration (working pattern)
+// Note: trackball only exists on R side, L side build will ignore this
+#ifdef CONFIG_ZMK_SPLIT_ROLE_CENTRAL
 &trackball {
     automouse-layer = <4>;        // Layer 4 is MOUSE layer
     scroll-layers = <5>;          // Layer 5 is SCROLL layer  
     movement-timeout-ms = <600>;  // 600ms timeout
     movement-threshold = <0>;     // Any movement triggers
 };
+#endif
 
 / {
     combos {
