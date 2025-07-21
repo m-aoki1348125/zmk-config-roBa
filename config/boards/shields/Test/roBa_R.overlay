@@ -1,6 +1,7 @@
 #include "roBa.dtsi"
 #include <dt-bindings/input/input-event-codes.h>
 #include <input/processors.dtsi>
+#include <dt-bindings/zmk/input_transform.h>
 
 &default_transform {
     col-offset = <6>;
@@ -44,7 +45,6 @@
         automouse-layer = <4>;          // Layer 4 is MOUSE layer
         scroll-layers = <5>;            // Layer 5 is SCROLL layer
         
-        // Input processors removed for basic functionality test
     };
 };
 
@@ -54,6 +54,8 @@
         compatible = "zmk,input-listener";
         device = <&trackball_device>;
         status = "okay";
+        // Input processors for coordinate transformation
+        input-processors = <&zip_xy_transform (INPUT_TRANSFORM_Y_INVERT)>;
     };
 };
 
