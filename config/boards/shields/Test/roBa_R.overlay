@@ -29,14 +29,22 @@
         compatible = "pixart,pmw3610";
         reg = <0>;
         spi-max-frequency = <2000000>;
-        irq-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+        motion-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
         
-        // Auto mouse layer configuration (supported properties only)
+        // Required axis definitions for cursor movement
+        zephyr,axis-x = <INPUT_REL_X>;
+        zephyr,axis-y = <INPUT_REL_Y>;
+        
+        // CPI resolution setting
+        res-cpi = <400>;
+        
+        // Auto mouse layer configuration
         automouse-layer = <4>;          // Layer 4 is MOUSE layer
         scroll-layers = <5>;            // Layer 5 is SCROLL layer
         
-        // Critical: Connect trackball to pointing device for cursor movement
-        input-processors = <&trackball_pointing>;
+        // Sensor behaviors
+        force-awake;
+        smart-mode;
     };
 };
 
@@ -47,14 +55,6 @@
         device = <&trackball_device>;
         status = "okay";
     };
-
-    // Critical: Pointing device configuration for cursor movement
-    trackball_pointing: trackball_pointing {
-        compatible = "zmk,pointing-device";
-        device = <&trackball_device>;
-        status = "okay";
-    };
-
 };
 
 
