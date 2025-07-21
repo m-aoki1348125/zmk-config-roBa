@@ -1,5 +1,6 @@
 #include "roBa.dtsi"
 #include <dt-bindings/input/input-event-codes.h>
+#include <input/processors.dtsi>
 
 &default_transform {
     col-offset = <6>;
@@ -29,22 +30,22 @@
         compatible = "pixart,pmw3610";
         reg = <0>;
         spi-max-frequency = <2000000>;
-        motion-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+        irq-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
         
-        // Required axis definitions for cursor movement
-        zephyr,axis-x = <INPUT_REL_X>;
-        zephyr,axis-y = <INPUT_REL_Y>;
+        // Required input event properties for cursor movement
+        evt-type = <INPUT_EV_REL>;
+        x-input-code = <INPUT_REL_X>;
+        y-input-code = <INPUT_REL_Y>;
         
         // CPI resolution setting
-        res-cpi = <400>;
+        cpi = <400>;
         
         // Auto mouse layer configuration
         automouse-layer = <4>;          // Layer 4 is MOUSE layer
         scroll-layers = <5>;            // Layer 5 is SCROLL layer
         
-        // Sensor behaviors
-        force-awake;
-        smart-mode;
+        // Input processors for coordinate transformation
+        input-processors = <&zip_xy_transform INPUT_TRANSFORM_Y_INVERT>;
     };
 };
 
