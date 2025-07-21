@@ -44,8 +44,7 @@
         automouse-layer = <4>;          // Layer 4 is MOUSE layer
         scroll-layers = <5>;            // Layer 5 is SCROLL layer
         
-        // Input processors for coordinate transformation
-        input-processors = <&zip_xy_transform (INPUT_TRANSFORM_Y_INVERT)>;
+        // Input processors removed for basic functionality test
     };
 };
 
