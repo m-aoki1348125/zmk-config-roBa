@@ -1,4 +1,5 @@
 #include "roBa.dtsi"
+#include <dt-bindings/input/input-event-codes.h>
 
 &default_transform {
     col-offset = <6>;
@@ -33,6 +34,9 @@
         // Auto mouse layer configuration (supported properties only)
         automouse-layer = <4>;          // Layer 4 is MOUSE layer
         scroll-layers = <5>;            // Layer 5 is SCROLL layer
+        
+        // Critical: Connect trackball to pointing device for cursor movement
+        input-processors = <&trackball_pointing>;
     };
 };
 
@@ -43,6 +47,14 @@
         device = <&trackball_device>;
         status = "okay";
     };
+
+    // Critical: Pointing device configuration for cursor movement
+    trackball_pointing: trackball_pointing {
+        compatible = "zmk,pointing-device";
+        device = <&trackball_device>;
+        status = "okay";
+    };
+
 };
 
 
