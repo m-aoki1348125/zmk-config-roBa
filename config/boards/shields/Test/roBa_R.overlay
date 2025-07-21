@@ -30,11 +30,9 @@
         spi-max-frequency = <2000000>;
         irq-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
         
-        // Auto mouse layer configuration
+        // Auto mouse layer configuration (supported properties only)
         automouse-layer = <4>;          // Layer 4 is MOUSE layer
         scroll-layers = <5>;            // Layer 5 is SCROLL layer
-        movement-timeout-ms = <2000>;   // 2 second timeout
-        movement-threshold = <0>;       // Any movement triggers auto mouse
     };
 };
 
