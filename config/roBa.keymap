@@ -77,11 +77,11 @@
             // sensor-bindings = <&inc_dec_kp DOWN_ARROW UP_ARROW>; // Disabled for stable build
         };
 
-        // Auto mouse layer (layer 1) - Optimized for trackball usage
+        // Auto mouse layer (layer 1) - Activated by trackball movement
         auto_mouse_layer {
             bindings = <
 &trans      &trans      &trans      &trans      &trans                      &mkp LCLK   &mkp RCLK   &mkp MCLK   &trans      &trans
-&trans      &trans      &trans      &trans      &trans  &trans      &trans  &mkp MB4    &mkp MB5    &kp LC(C)   &kp LC(V)   &trans
+&trans      &trans      &trans      &trans      &trans  &trans      &trans  &mkp MB4    &mkp MB5    &trans      &trans      &trans
 &trans      &trans      &trans      &trans      &trans  &trans      &trans  &kp LSHFT   &kp LCTRL   &kp LALT    &kp LGUI    &mo 2
 &trans      &trans      &trans      &trans      &trans  &trans      &trans  &trans                              &trans
             >;

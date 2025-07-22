@@ -247,7 +247,7 @@ Current configuration uses official ZMK pattern:
         compatible = "zmk,input-listener";
         device = <&trackball>;
         status = "okay";
-        input-processors = <&zip_temp_layer 1 800>;  // Auto mouse layer (layer 1, 800ms timeout)
+        input-processors = <&zip_temp_layer 1 600>;  // Auto mouse layer (layer 1, 600ms timeout)
     };
 };
 ```
@@ -255,7 +255,7 @@ Current configuration uses official ZMK pattern:
 ### Build System
 - **Automated Builds**: GitHub Actions triggered on push
 - **Build Targets**: `roBa_L`, `roBa_R`, `settings_reset`
-- **Dependencies**: PMW3610 driver from inorichi/zmk-pmw3610-driver
+- **Dependencies**: PMW3610 driver from kumamuk-git/zmk-pmw3610-driver
 
 ## Development Guidelines
 
@@ -333,7 +333,7 @@ Current configuration uses official ZMK pattern:
 - Configuration Reference: https://zmk.dev/docs/config/
 
 ### Module Dependencies
-- PMW3610 Driver: https://github.com/inorichi/zmk-pmw3610-driver
+- PMW3610 Driver: https://github.com/kumamuk-git/zmk-pmw3610-driver
 
 ### Hardware References  
 - Seeed Studio XIAO BLE: nRF52840 MCU
