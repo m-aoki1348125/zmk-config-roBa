@@ -8,6 +8,14 @@ This is a ZMK (Zephyr Mechanical Keyboard) configuration repository for the "roB
 
 ZMK is a modern, open-source keyboard firmware built on the Zephyr™ Project RTOS, designed for power efficiency, wireless connectivity, and flexible configuration through Devicetree and Kconfig systems.
 
+## ZMK Firmware Overview
+
+**Official Repository**: https://github.com/zmkfirmware/zmk  
+**Documentation**: https://zmk.dev/  
+**License**: MIT License (less restrictive than QMK's GPL)  
+**Foundation**: Built on Zephyr™ Project RTOS for robust hardware support  
+**Focus**: Wireless-first design with Bluetooth Low Energy native support
+
 ## ZMK Firmware Architecture
 
 ### Core Systems Overview
@@ -193,7 +201,7 @@ ZMK generates HID reports for communication with hosts:
 ### Hardware Configuration
 - **MCU**: Seeed Studio XIAO BLE (nRF52840)
 - **Split Communication**: BLE between halves
-- **Trackball**: PAW3222 sensor on right half (SPI)
+- **Trackball**: PMW3610 sensor on right half (SPI)
 - **Encoders**: Rotary encoders on both halves
 - **Matrix**: 38-key split (19 keys per half)
 
@@ -226,7 +234,8 @@ Current configuration uses official ZMK pattern:
 // In roBa_R.overlay
 &spi0 {
     trackball: trackball@0 {
-        compatible = "pixart,paw3222";
+        status = "okay";
+        compatible = "pixart,pmw3610";
         reg = <0>;
         spi-max-frequency = <2000000>;
         irq-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
@@ -237,6 +246,7 @@ Current configuration uses official ZMK pattern:
     trackball_listener: trackball_listener {
         compatible = "zmk,input-listener";
         device = <&trackball>;
+        status = "okay";
         input-processors = <&zip_temp_layer 4 600>;  // Auto mouse layer
     };
 };
@@ -245,7 +255,7 @@ Current configuration uses official ZMK pattern:
 ### Build System
 - **Automated Builds**: GitHub Actions triggered on push
 - **Build Targets**: `roBa_L`, `roBa_R`, `settings_reset`
-- **Dependencies**: PAW3222 driver from m-aoki1348125/zmk-driver-paw3222
+- **Dependencies**: PMW3610 driver from kumamuk-git/zmk-pmw3610-driver
 
 ## Development Guidelines
 
@@ -323,12 +333,158 @@ Current configuration uses official ZMK pattern:
 - Configuration Reference: https://zmk.dev/docs/config/
 
 ### Module Dependencies
-- PAW3222 Driver: https://github.com/m-aoki1348125/zmk-driver-paw3222
-- Auto Layer Module: https://github.com/urob/zmk-auto-layer
+- PMW3610 Driver: https://github.com/kumamuk-git/zmk-pmw3610-driver
 
 ### Hardware References  
 - Seeed Studio XIAO BLE: nRF52840 MCU
-- PAW3222: Optical tracking sensor
+- PMW3610: Optical tracking sensor
 - Standard GPIO matrix scanning for switches
+
+## ZMK Repository Structure and Implementation
+
+### Main Directory Structure
+```
+app/                         # ZMK application core
+├── boards/                  # Hardware definitions
+│   ├── arm/                 # ARM architecture boards (MCU-integrated)
+│   └── shields/             # Shield definitions (keyboard PCBs)
+├── dts/                     # Devicetree source files
+├── include/                 # Header files
+├── module/                  # ZMK modules
+├── src/                     # Core C source files
+│   ├── behaviors/           # Behavior implementations
+│   ├── events/              # Event processing
+│   └── split/               # Split keyboard functionality
+docs/                        # Documentation
+```
+
+### Core Implementation Details
+
+#### Kscan System
+- **Purpose**: Physical key input detection and debouncing
+- **Configuration**: `CONFIG_ZMK_KSCAN=y` enables kscan integration
+- **Debouncing**: Configurable via `CONFIG_ZMK_KSCAN_DEBOUNCE_PRESS_MS` and `CONFIG_ZMK_KSCAN_DEBOUNCE_RELEASE_MS`
+- **Driver Types**: Direct GPIO, Matrix, Demux, Composite, Mock (testing)
+- **Event Generation**: Creates `zmk_position_state_changed` events
+
+#### Event System Architecture
+ZMK uses event-driven architecture for loose coupling between components:
+
+**Key Event Types**:
+- `position_state_changed`: Key press/release with position and timestamp
+- `keycode_state_changed`: Keycode events with modifiers
+- `modifiers_state_changed`: Modifier state changes
+- `layer_state_changed`: Layer activation/deactivation
+- `sensor_event`: Encoder and sensor data
+- `endpoint_changed`: Connection state changes
+
+**Event Management**:
+- Declared with `ZMK_EVENT_DECLARE` macro
+- Listeners registered with `ZMK_LISTENER`
+- Subscriptions via `ZMK_SUBSCRIPTION`
+- Return values: `ZMK_EV_EVENT_BUBBLE`, `ZMK_EV_EVENT_HANDLED`, `ZMK_EV_EVENT_CAPTURED`
+
+#### HID Report Generation
+- **Report Types**: Keyboard (NKRO/HKRO), Consumer (media keys), Mouse (pointing devices)
+- **Configuration Options**: 
+  - `CONFIG_ZMK_HID_REPORT_TYPE_NKRO`: N-Key Rollover support
+  - `CONFIG_ZMK_HID_CONSUMER_REPORT_USAGES_FULL`: Extended consumer keys
+- **Processing**: HID listener processes key events and calls appropriate HID functions
+- **Transmission**: Reports sent via `zmk_endpoints_send_report()`
+
+#### Power Management
+- **Idle Control**: `CONFIG_ZMK_IDLE_TIMEOUT` for idle state timing
+- **Sleep Support**: `CONFIG_ZMK_SLEEP` enables deep sleep functionality
+- **Sleep Timeout**: `CONFIG_ZMK_IDLE_SLEEP_TIMEOUT` for deep sleep timing
+- **Soft Off**: `CONFIG_ZMK_PM_SOFT_OFF` for keymap-triggered power off
+- **Battery Reporting**: `CONFIG_ZMK_BATTERY_REPORTING` for BLE battery status
+
+#### Advanced Behavior System
+
+##### Macro System
+- **Definition**: `ZMK_MACRO` macro for custom action sequences
+- **Timing Control**: 
+  - `wait-ms`: Delay between actions (default 15ms)
+  - `tap-ms`: Hold duration for tap actions (default 30ms)
+- **Control Actions**: `&macro_tap`, `&macro_press`, `&macro_release`, `&macro_pause_for_release`
+- **Dynamic Timing**: `&macro_wait_time`, `&macro_tap_time` for runtime adjustment
+- **Parameterization**: Support for 1-2 parameter macros for modularity
+
+##### Combo System
+- **Configuration**: Defined in `combos` node with `key-positions`, `bindings`, `timeout-ms`
+- **Structure**: Managed by `struct combo_cfg` 
+- **Timing Options**: `require_prior_idle_ms` for preventing accidental triggers
+- **Release Behavior**: `slow_release` property controls when combo releases
+- **Limits**: Configurable via `CONFIG_ZMK_COMBO_MAX_*` options
+
+##### Hold-Tap Behaviors
+- **Flavors**:
+  - `hold-preferred`: Triggers hold on other key press or timer
+  - `balanced`: Similar to hold-preferred with release cancellation
+  - `tap-preferred`: Only triggers hold on timer expiry
+  - `tap-unless-interrupted`: Triggers hold only on interruption
+- **Timing**: `tapping-term-ms` for hold threshold
+- **Quick Tap**: `quick-tap-ms` for repeat tap behavior
+
+##### Layer Management
+- **Core Behaviors**: 
+  - `&mo`: Momentary layer activation
+  - `&lt`: Layer-tap (hold for layer, tap for key)
+  - `&to`: Switch to layer exclusively
+  - `&tog`: Toggle layer on/off
+  - `&sl`: Sticky layer (one-shot)
+- **Reordering**: `CONFIG_ZMK_KEYMAP_LAYER_REORDERING` enables dynamic layer priority
+
+##### RGB/LED System
+- **RGB Underglow**: `CONFIG_ZMK_RGB_UNDERGLOW` with `&rgb_ug` behavior
+- **Configuration Options**:
+  - `ZMK_RGB_UNDERGLOW_EXT_POWER`: External power control
+  - `ZMK_RGB_UNDERGLOW_BRT_MIN/MAX`: Brightness limits
+  - `ZMK_RGB_UNDERGLOW_HUE/SAT_STEP`: Color adjustment steps
+- **Split Synchronization**: Global execution across split halves
+- **Backlight**: `&bl` behavior for key backlighting
+
+##### Encoder Support
+- **Hardware**: EC11 rotary encoder support via `CONFIG_EC11=y`
+- **Threading**: `CONFIG_EC11_TRIGGER_GLOBAL_THREAD=y` for proper operation
+- **Configuration**:
+  - Push button: Part of keyboard matrix
+  - Rotation: Sensor with `sensor-bindings` for CW/CCW actions
+- **Behavior Evolution**: From `&inc_dec_kp` limitation to arbitrary behavior support
+
+### Build System and Development
+
+#### Build Process
+- **Foundation**: Uses Zephyr's West build tool
+- **GitHub Actions**: Automated firmware building
+- **Configuration**: `zmk-config` repository pattern with `.conf` and `.overlay` files
+- **Split Builds**: Separate firmware for each split half
+
+#### Development Tools
+- **ZMK Tools**: VS Code extension for configuration editing
+- **Keymap Editor**: Web-based graphical editor
+- **ZMK Locale Generator**: International keyboard layout support
+- **Debugging**: USB logging via `CONFIG_ZMK_USB_LOGGING`
+
+#### Hardware Support Matrix
+- **MCU Support**: 32/64-bit microcontrollers only (no AVR support)
+- **Wireless**: Native BLE 4.2+ with secure connections
+- **Sensors**: Encoders, pointing devices, environmental sensors
+- **Displays**: LVGL-based display system
+- **Power Features**: Low-power design optimized for battery operation
+
+## ZMK vs QMK Comparison
+
+| Aspect | ZMK | QMK |
+|--------|-----|-----|
+| **Foundation** | Zephyr RTOS | Custom framework |
+| **License** | MIT | GPL |
+| **Wireless** | Native BLE support | Limited/aftermarket |
+| **Architecture** | 32/64-bit only | AVR + ARM support |
+| **Power Management** | Built-in low-power design | Retrofitted power features |
+| **Configuration** | Devicetree + Kconfig | C headers + make |
+| **Behavior System** | Object-oriented behaviors | Function-based behaviors |
+| **Split Communication** | BLE-native | Various protocols |
+| **Development Model** | GitHub Actions builds | Local compilation |
 
 This comprehensive knowledge base should guide all future development and troubleshooting for this ZMK configuration repository.

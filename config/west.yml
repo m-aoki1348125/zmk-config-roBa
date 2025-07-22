@@ -18,8 +18,5 @@ manifest:
     # - name: zmk-mouse-gesture
     #   remote: kot149
     #   revision: v1
-    - name: zmk-auto-layer
-      remote: urob
-      revision: main
   self:
     path: config
