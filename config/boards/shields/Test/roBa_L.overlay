@@ -11,19 +11,7 @@
             ;
 };
 
-/ {
-    // EXACT working split inputs configuration from split-wball-44 left side
-    split_inputs {
-        #address-cells = <1>;
-        #size-cells = <0>;
-
-        trackball_split: trackball_split@0 {
-            compatible = "zmk,input-split";
-            reg = <0>;
-            device = <&trackball>;
-        };
-    };
-};
+// L side does not have trackball device - removed split_inputs to prevent errors
 
 &left_encoder {
     status = "okay";
