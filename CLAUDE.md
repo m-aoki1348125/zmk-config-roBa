@@ -220,11 +220,11 @@ config/
 
 ### Layer Architecture
 - **Layer 0**: Default typing layer
-- **Layer 1**: Function layer (F-keys, media)
-- **Layer 2**: Number/symbol layer
-- **Layer 3**: Arrow navigation layer
-- **Layer 4**: Auto mouse layer (activated by trackball movement)
-- **Layer 5**: Scroll layer (for scroll mode)
+- **Layer 1**: Auto mouse layer (activated by trackball movement)
+- **Layer 2**: Scroll layer (activated by &mo 2 in auto mouse layer)
+- **Layer 3**: Function layer (F-keys, media)
+- **Layer 4**: Number/symbol layer
+- **Layer 5**: Arrow navigation layer
 - **Layer 6**: Bluetooth management layer
 
 ### Trackball Implementation
@@ -247,7 +247,7 @@ Current configuration uses official ZMK pattern:
         compatible = "zmk,input-listener";
         device = <&trackball>;
         status = "okay";
-        input-processors = <&zip_temp_layer 4 600>;  // Auto mouse layer
+        input-processors = <&zip_temp_layer 1 800>;  // Auto mouse layer (layer 1, 800ms timeout)
     };
 };
 ```

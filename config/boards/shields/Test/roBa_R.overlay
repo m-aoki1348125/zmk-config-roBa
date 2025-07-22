@@ -41,7 +41,7 @@
         compatible = "zmk,input-listener";
         device = <&trackball>;
         status = "okay";
-        input-processors = <&zip_temp_layer 4 600>;  // Layer 4, 600ms timeout
+        input-processors = <&zip_temp_layer 1 800>;  // Layer 1, 800ms timeout for better usability
     };
 };
 
