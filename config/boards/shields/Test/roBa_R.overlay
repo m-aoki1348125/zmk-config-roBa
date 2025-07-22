@@ -36,20 +36,13 @@
 };
 
 / {
-    // Simplified trackball listener for basic cursor movement
+    // ZMK official auto mouse layer implementation using zip_temp_layer
     trackball_listener: trackball_listener {
         compatible = "zmk,input-listener";
         device = <&trackball>;
         status = "okay";
+        input-processors = <&zip_temp_layer 4 600>;  // Layer 4, 600ms timeout
     };
-};
-
-// EXACT auto mouse layer configuration from split-wball-44
-&trackball {
-    automouse-layer = <4>;       // Layer 4 for auto mouse
-    scroll-layers = <5>;         // Layer 5 for scroll mode  
-    movement-timeout-ms = <600>; // 600ms timeout before returning to base layer
-    movement-threshold = <0>;    // Any movement triggers auto mouse
 };
 
 
