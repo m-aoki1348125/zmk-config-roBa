@@ -1,10 +1,12 @@
 // Mouse gesture disabled for stable auto mouse layer
 // #include <mouse-gesture.dtsi>
+
+#include <dt-bindings/zmk/mouse.h>
+#include <input/processors.dtsi>
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
-#include <dt-bindings/zmk/mouse.h>
-#include <input/processors.dtsi>
+#include <dt-bindings/zmk/pointing.h>
 
 &mt {
     flavor = "balanced";
@@ -62,7 +64,6 @@
         };
     };
 
-
     keymap {
         compatible = "zmk,keymap";
 
@@ -71,29 +72,31 @@
 &kp Q             &kp W         &kp E         &kp R          &kp T                                          &kp Y        &kp U  &kp I      &kp O    &kp P
 &mt LCTRL A       &kp S         &kp D         &kp F          &kp G        &kp LS(LG(S))      &kp TAB        &kp H        &kp J  &kp K      &kp L    &mt RCTRL MINUS
 &mt LEFT_SHIFT Z  &kp X         &kp C         &kp V          &kp B        &kp COLON          &kp SEMICOLON  &kp N        &kp M  &kp COMMA  &kp DOT  &mt RIGHT_SHIFT SLASH
-&kp LCTRL         &kp LEFT_WIN  &kp LEFT_ALT  &kp BACKSPACE  &lt 5 LANG2  &lt 4 SPACE        &lt 3 ENTER    &lt 4 LANG1                             &kp DEL
+&kp LCTRL         &kp LEFT_WIN  &kp LEFT_ALT  &kp BACKSPACE  &lt 5 LANG2  &lt 1 SPACE        &lt 3 ENTER    &lt 4 LANG1                             &kp DEL
             >;
 
             // sensor-bindings = <&inc_dec_kp DOWN_ARROW UP_ARROW>; // Disabled for stable build
         };
 
         // Auto mouse layer (layer 1) - Activated by trackball movement
+
         auto_mouse_layer {
             bindings = <
-&trans      &trans      &trans      &trans      &trans                      &mkp LCLK   &mkp RCLK   &mkp MCLK   &trans      &trans
-&trans      &trans      &trans      &trans      &trans  &trans      &trans  &mkp MB4    &mkp MB5    &trans      &trans      &trans
-&trans      &trans      &trans      &trans      &trans  &trans      &trans  &kp LSHFT   &kp LCTRL   &kp LALT    &kp LGUI    &mo 2
-&trans      &trans      &trans      &trans      &trans  &trans      &trans  &trans                              &trans
+&trans  &trans  &trans  &trans  &trans                      &mkp LCLK  &mkp MB3   &mkp MCLK  &trans    &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &mkp MB4   &mkp MB1   &mo 2      &trans    &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &kp LSHFT  &kp LCTRL  &kp LALT   &kp LGUI  &mo 2
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                                     &trans
             >;
         };
 
         // Scroll layer (layer 2) - For scroll mode when holding mo 2
+
         scroll_layer {
             bindings = <
-&trans      &trans      &trans      &trans      &trans                      &mkp LCLK   &mkp RCLK   &mkp MCLK   &trans      &trans
-&trans      &trans      &trans      &trans      &trans  &trans      &trans  &trans      &trans      &trans      &trans      &trans
-&trans      &trans      &trans      &trans      &trans  &trans      &trans  &trans      &trans      &trans      &trans      &trans
-&trans      &trans      &trans      &trans      &trans  &trans      &trans  &trans                              &trans
+&trans  &trans  &trans  &trans  &trans                      &mkp LCLK  &mkp RCLK  &mkp MCLK  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans     &trans     &trans     &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans     &trans     &trans     &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                                   &trans
             >;
         };
 
