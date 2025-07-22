@@ -4,12 +4,6 @@ manifest:
       url-base: https://github.com/zmkfirmware
     - name: kumamuk-git
       url-base: https://github.com/kumamuk-git
-    - name: badjeff
-      url-base: https://github.com/badjeff
-    - name: m-aoki1348125
-      url-base: https://github.com/m-aoki1348125
-    - name: kot149
-      url-base: https://github.com/kot149
     - name: urob
       url-base: https://github.com/urob
   projects:
@@ -17,8 +11,8 @@ manifest:
       remote: zmkfirmware
       revision: main
       import: app/west.yml
-    - name: zmk-driver-paw3222
-      remote: m-aoki1348125
+    - name: zmk-pmw3610-driver
+      remote: kumamuk-git
       revision: main
     # Mouse gesture disabled for stable auto mouse layer
     # - name: zmk-mouse-gesture
