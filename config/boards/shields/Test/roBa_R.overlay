@@ -32,22 +32,14 @@
         reg = <0>;
         spi-max-frequency = <2000000>;
         irq-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-        
-        // PMW3610 specific configuration for better responsiveness
-        cpi = <1600>;
-        evt-type = <0x02>;
-        x-input-code = <0x00>;
-        y-input-code = <0x01>;
     };
 };
 
 / {
-    // ZMK official auto mouse layer implementation using zip_temp_layer
     trackball_listener: trackball_listener {
+        status = "okay";
         compatible = "zmk,input-listener";
         device = <&trackball>;
-        status = "okay";
-        input-processors = <&zip_temp_layer 1 600>;  // Layer 1, 600ms timeout for responsive switching
     };
 };
 

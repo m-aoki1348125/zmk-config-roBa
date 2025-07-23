@@ -220,18 +220,18 @@ config/
 
 ### Layer Architecture
 - **Layer 0**: Default typing layer
-- **Layer 1**: Auto mouse layer (activated by trackball movement)
-- **Layer 2**: Scroll layer (activated by &mo 2 in auto mouse layer)
-- **Layer 3**: Function layer (F-keys, media)
-- **Layer 4**: Number/symbol layer
-- **Layer 5**: Arrow navigation layer
+- **Layer 1**: Function layer (F-keys, media)
+- **Layer 2**: Number/symbol layer
+- **Layer 3**: Arrow navigation layer
+- **Layer 4**: Auto mouse layer (activated by trackball movement via PMW3610 driver)
+- **Layer 5**: Scroll layer (activated by &mo 5 from auto mouse layer)
 - **Layer 6**: Bluetooth management layer
 
 ### Trackball Implementation
-Current configuration uses official ZMK pattern:
+Current configuration uses PMW3610 driver-specific auto mouse functionality:
 
 ```dts
-// In roBa_R.overlay
+// In roBa_R.overlay - Hardware configuration
 &spi0 {
     trackball: trackball@0 {
         status = "okay";
@@ -244,11 +244,16 @@ Current configuration uses official ZMK pattern:
 
 / {
     trackball_listener: trackball_listener {
+        status = "okay";
         compatible = "zmk,input-listener";
         device = <&trackball>;
-        status = "okay";
-        input-processors = <&zip_temp_layer 1 600>;  // Auto mouse layer (layer 1, 600ms timeout)
     };
+};
+
+// In roBa.keymap - Auto mouse layer configuration
+&trackball {
+    automouse-layer = <4>;  // Layer 4 auto-activated by trackball movement
+    scroll-layers = <5>;    // Layer 5 for scroll functionality
 };
 ```
 
